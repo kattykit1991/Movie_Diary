@@ -1,0 +1,107 @@
+/* ========================================
+   GENERELLE BLERPS
+   ======================================== */
+
+/* weil browser sonst wieder irgendwelche eigenen abstände erfinden */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  background-color: #111118;
+  color: #f5f5f5;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========================================
+   NAV BLERPS
+   ======================================== */
+
+nav {
+  min-height: 60px;
+
+  background-color: #191922;
+}
+
+/* ========================================
+   HEADER BLERPS
+   ======================================== */
+
+header {
+  padding: 40px 30px;
+
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ========================================
+   MOVIEBLERP CONTAINER
+   ======================================== */
+
+/* hier werden alle movie cards reingestopft */
+.movieCards {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+  padding: 20px 0 60px;
+
+  display: grid;
+
+  /* mach so viele spalten wie sinnvoll reinpassen
+     ohne dass ich selber zählen muss xD */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+  gap: 24px;
+}
+
+/* ========================================
+   EINZELNE MOVIE CARD BLERPS
+   ======================================== */
+
+.movieCard {
+  overflow: hidden;
+
+  background-color: #1d1d28;
+
+  border-radius: 14px;
+
+  box-shadow: 0 8px 20px rgb(0 0 0 / 30%);
+}
+
+/* filmname */
+.movieName {
+  margin: 0;
+  padding: 16px;
+
+  font-size: 1rem;
+}
+
+/* ========================================
+   POSTER BLERPS
+   ======================================== */
+
+.movieThumbnail {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 2 / 3;
+
+  object-fit: cover;
+}
+
+/* ========================================
+   FOOTER BLERPS
+   ======================================== */
+
+footer {
+  min-height: 80px;
+  padding: 20px;
+
+  text-align: center;
+
+  color: #aaa;
+}
