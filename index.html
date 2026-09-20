@@ -3,28 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Movie Blerps | Home</title>
-    <script src="main.js" defer></script>
+
     <link rel="stylesheet" href="style.css" />
-    <!-- kommentare sind so. Oder über tastenkombi:  ⌘ + / -->
+    <script src="main.js" defer></script>
   </head>
 
   <body>
+    <!-- ========================================
+         NAV BLERPS
+         ======================================== -->
+
     <nav>
-      <!-- hier navigation. noch entscheiden ob in header oder seitenleiste -->
+      <a href="index.html">MovieBlerps</a>
+      <a href="journal.html">My Journal</a>
+
+      <!-- movieblerp suchen -->
+      <form class="movieSearch">
+        <input
+          type="search"
+          class="searchInput"
+          placeholder="Search for a movie..."
+          aria-label="Search for a movie"
+        />
+
+        <button type="submit" class="searchButton">Search</button>
+      </form>
     </nav>
+
+    <!-- ========================================
+         HEADER BLERPS
+         ======================================== -->
+
     <header>
-      Welcome to MovieBlerps!
-      <!-- "logo" plus Favoriten/journal link in Navbar/seitenleiste? -->
-      <!-- kommt das dann in den header? hmm....oder oben nav und so? -->
+      <h1>Welcome to MovieBlerps!</h1>
     </header>
 
-    <section class="movieCards">
-      <!-- moviekarten hier durch DOM manipulation über fetch? -->
-    </section>
+    <!-- ========================================
+         MOVIE BLERPS
+         ======================================== -->
+
+    <main>
+      <!-- moviecards werden von main.js hier reingestopft -->
+      <section class="movieCards"></section>
+    </main>
+
+    <!-- ========================================
+         TMDB BLERPS
+         ======================================== -->
 
     <footer>
-      <!-- "impressumdings" + mention of TMDB hier rein mit deren logo in klein, plus disclaimer -->
+      <img src="images/tmdb-logo.svg" alt="The Movie Database (TMDB) logo" />
+
+      <p>
+        This product uses the TMDB API but is not endorsed or certified by TMDB.
+      </p>
+
+      <p>Movie data and images provided by TMDB.</p>
     </footer>
   </body>
 </html>

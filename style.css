@@ -2,7 +2,6 @@
    GENERELLE BLERPS
    ======================================== */
 
-/* weil browser sonst wieder irgendwelche eigenen abstände erfinden */
 * {
   box-sizing: border-box;
 }
@@ -11,8 +10,8 @@ body {
   margin: 0;
   min-height: 100vh;
 
-  background-color: #111118;
-  color: #f5f5f5;
+  background-color: #0f0f16;
+  color: #f5f5f7;
 
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -22,9 +21,71 @@ body {
    ======================================== */
 
 nav {
-  min-height: 60px;
+  min-height: 72px;
+  padding: 14px 5%;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
 
   background-color: #191922;
+  border-bottom: 1px solid #292936;
+}
+
+/* home + journal links */
+nav a {
+  color: #f5f5f7;
+
+  font-weight: bold;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #b8a7ff;
+}
+
+/* ========================================
+   SEARCH BLERPS
+   ======================================== */
+
+.movieSearch {
+  margin-left: auto;
+
+  display: flex;
+  gap: 8px;
+}
+
+.searchInput {
+  width: min(300px, 45vw);
+  padding: 10px 14px;
+
+  background-color: #242430;
+  color: #ffffff;
+
+  border: 1px solid #3a3a49;
+  border-radius: 999px;
+}
+
+.searchInput::placeholder {
+  color: #9999a8;
+}
+
+.searchButton {
+  padding: 10px 16px;
+
+  background-color: #5d4b8a;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 999px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  background-color: #7561a8;
 }
 
 /* ========================================
@@ -32,28 +93,37 @@ nav {
    ======================================== */
 
 header {
-  padding: 40px 30px;
+  padding: 52px 30px 34px;
 
-  font-size: 2rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: bold;
   text-align: center;
+}
+
+header h1 {
+  margin: 0;
+
+  font-size: inherit;
 }
 
 /* ========================================
    MOVIEBLERP CONTAINER
    ======================================== */
 
-/* hier werden alle movie cards reingestopft */
-.movieCards {
+.movieCards,
+.journalMovies {
   width: min(1200px, 90%);
   margin: 0 auto;
   padding: 20px 0 60px;
 
   display: grid;
 
-  /* mach so viele spalten wie sinnvoll reinpassen
-     ohne dass ich selber zählen muss xD */
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  /* cards bleiben schön card-groß
+     statt bei weniger filmen plötzlich GODZILLA zu spielen */
+  grid-template-columns: repeat(auto-fill, minmax(190px, 220px));
+
+  justify-content: center;
+  align-items: stretch;
 
   gap: 24px;
 }
@@ -62,22 +132,35 @@ header {
    EINZELNE MOVIE CARD BLERPS
    ======================================== */
 
-.movieCard {
+.movieCard,
+.journalCard {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
   overflow: hidden;
 
   background-color: #1d1d28;
 
+  border: 1px solid #292936;
   border-radius: 14px;
 
   box-shadow: 0 8px 20px rgb(0 0 0 / 30%);
 }
 
-/* filmname */
+/* filmname
+   bekommt feste mindesthöhe damit nicht jede card macht was sie will */
 .movieName {
+  min-height: 66px;
   margin: 0;
-  padding: 16px;
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
 
   font-size: 1rem;
+  line-height: 1.2;
 }
 
 /* ========================================
@@ -91,6 +174,76 @@ header {
   aspect-ratio: 2 / 3;
 
   object-fit: cover;
+
+  background-color: #292936;
+}
+
+/* ========================================
+   BUTTON BLERPS
+   ======================================== */
+
+.journalButton,
+.deleteButton {
+  width: calc(100% - 24px);
+  margin: 12px;
+  padding: 10px 12px;
+
+  background-color: #373747;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 9px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.journalButton {
+  margin-top: auto;
+}
+
+.journalButton:hover {
+  background-color: #5d4b8a;
+}
+
+.deleteButton {
+  margin-top: 10px;
+}
+
+.deleteButton:hover {
+  background-color: #7a3945;
+}
+
+/* ========================================
+   JOURNAL NOTE BLERPS
+   ======================================== */
+
+.movieNote {
+  width: calc(100% - 24px);
+  min-height: 76px;
+
+  margin: 12px 12px 0;
+  padding: 10px;
+
+  resize: vertical;
+
+  background-color: #272733;
+  color: #ffffff;
+
+  border: 1px solid #3a3a49;
+  border-radius: 9px;
+
+  font: inherit;
+}
+
+.movieNote:focus {
+  outline: 2px solid #5d4b8a;
+  border-color: transparent;
+}
+
+.movieNote::placeholder {
+  color: #9999a8;
 }
 
 /* ========================================
@@ -98,10 +251,134 @@ header {
    ======================================== */
 
 footer {
-  min-height: 80px;
-  padding: 20px;
+  width: min(1200px, 90%);
+  margin: 30px auto 0;
+  padding: 30px 20px;
 
+  border-top: 1px solid #292936;
+
+  color: #9999a8;
+
+  font-size: 0.85rem;
+  line-height: 1.5;
   text-align: center;
+}
 
-  color: #aaa;
+footer p {
+  max-width: 700px;
+  margin: 8px auto;
+}
+
+footer img {
+  display: block;
+
+  width: auto;
+  max-width: 120px;
+  max-height: 45px;
+
+  margin: 0 auto 14px;
+
+  object-fit: contain;
+}
+
+/* ========================================
+   HINZUGEFÜGT KONFETTI BLERPS
+   ======================================== */
+
+.journalNotification {
+  position: fixed;
+
+  top: 30px;
+  left: 50%;
+  z-index: 1000;
+
+  transform: translateX(-50%);
+
+  padding: 14px 22px;
+
+  background-color: #1d1d28;
+  color: #ffffff;
+
+  border: 1px solid #555;
+  border-radius: 12px;
+
+  box-shadow: 0 8px 30px rgb(0 0 0 / 50%);
+
+  font-weight: bold;
+
+  animation: notificationPop 2s ease forwards;
+}
+
+.confetti {
+  display: inline-block;
+
+  margin: 0 8px;
+
+  animation: confettiParty 0.5s ease-in-out infinite alternate;
+}
+
+/* ========================================
+   ANIMATION BLERPS
+   ======================================== */
+
+@keyframes notificationPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.8);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1.05);
+  }
+
+  25% {
+    transform: translate(-50%, 0) scale(1);
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -10px) scale(0.95);
+  }
+}
+
+@keyframes confettiParty {
+  from {
+    transform: rotate(-15deg) scale(1);
+  }
+
+  to {
+    transform: rotate(15deg) scale(1.25);
+  }
+}
+
+/* ========================================
+   KLEINERE SCREEN BLERPS
+   ======================================== */
+
+@media (max-width: 650px) {
+  nav {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .movieSearch {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .searchInput {
+    width: 100%;
+
+    flex: 1;
+  }
+
+  .movieCards,
+  .journalMovies {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 }

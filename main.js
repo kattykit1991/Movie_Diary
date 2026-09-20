@@ -9,7 +9,8 @@ const options = {
     accept: "application/json",
 
     // API key/token blerps hier rein
-    Authorization: "Bearer KEY HERE",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MGViMDlmMzc0ZmI2NGU4NDgwYzJmNTU1OTA1MjllOSIsIm5iZiI6MTc4OTczMjc2OC42MTEsInN1YiI6IjZhYWQyN2EwYmFmNmRhODU1MjcxZmU1MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.wnr-XlCp0lIRPU0X2ss4C50EfCuZMW_eqUwuNu8jPZs",
   },
 };
 
@@ -19,6 +20,18 @@ const options = {
 
 // DAS ist das große ding wo alle movie cards reingestopft werden
 const movieCards = document.querySelector(".movieCards");
+
+// such-blerps
+const movieSearch = document.querySelector(".movieSearch");
+const searchInput = document.querySelector(".searchInput");
+
+// ========================================
+// JOURNAL BLERPS
+// ========================================
+
+// gucken ob schon movieblerps im journal wohnen
+// wenn nicht dann halt erstmal leeres array
+let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
 
 // ========================================
 // GIVE ME MOVIEBLERPS
@@ -62,16 +75,113 @@ function createMovieCard(data) {
 
   // tmdb gibt mir natürlich nur den halben bild-link WEIL WARUM EINFACH xD
   // also tmdb bild-url + poster_path zusammenkleben
-  movieThumbnail.src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
-  movieThumbnail.alt = data.title;
+  // manche movieblerps haben einfach kein poster weil WARUM AUCH IMMER
+  if (data.poster_path) {
+    movieThumbnail.src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+    movieThumbnail.alt = data.title;
+  } else {
+    movieThumbnail.alt = `No poster available for ${data.title}`;
+  }
+
   movieThumbnail.className = "movieThumbnail";
 
-  // titel + poster kommen IN die card
+  // ========================================
+  // JOURNAL HERZCHEN BLERPS
+  // ========================================
+
+  const journalButton = document.createElement("button");
+  journalButton.className = "journalButton";
+
+  // gucken ob dieser movieblerp schon im journal wohnt
+  function updateJournalHeart() {
+    const alreadySaved = favourites.some(function (movie) {
+      return movie.id === data.id;
+    });
+
+    if (alreadySaved) {
+      // voll = wohnt im journal
+      journalButton.textContent = "♥";
+      journalButton.classList.add("saved");
+      journalButton.title = "Remove from Journal";
+    } else {
+      // leer = wohnt noch NICHT im journal
+      journalButton.textContent = "♡";
+      journalButton.classList.remove("saved");
+      journalButton.title = "Add to Journal";
+    }
+  }
+
+  // herz direkt beim card-bauen richtig anzeigen
+  updateJournalHeart();
+
+  journalButton.addEventListener("click", function () {
+    // nochmal gucken wie der aktuelle stand ist
+    const alreadySaved = favourites.some(function (movie) {
+      return movie.id === data.id;
+    });
+
+    if (alreadySaved) {
+      // movieblerp wieder aus dem journal werfen
+      favourites = favourites.filter(function (movie) {
+        return movie.id !== data.id;
+      });
+
+      localStorage.setItem("favourites", JSON.stringify(favourites));
+
+      // herz wieder leer machen
+      updateJournalHeart();
+
+      console.log("Movie removed from journal:", data.title);
+    } else {
+      // ganzen movieblerp ins journal-array stopfen
+      favourites.push(data);
+
+      // localStorage kann natürlich keine arrays weil WARUM EINFACH
+      // also wieder schön in json-string verwandeln
+      localStorage.setItem("favourites", JSON.stringify(favourites));
+
+      // herz jetzt voll machen
+      updateJournalHeart();
+
+      // ERFOLG. KONFETTIIII 🎉
+      showJournalNotification();
+
+      console.log("Movie added to journal:", data.title);
+    }
+  });
+
+  // ========================================
+  // ALLES IN DIE CARD STOPFEN
+  // ========================================
+
   movieCard.appendChild(movieName);
   movieCard.appendChild(movieThumbnail);
+  movieCard.appendChild(journalButton);
 
   // und die fertige card kommt ins große movieCards-ding
   movieCards.appendChild(movieCard);
+}
+
+// ========================================
+// HINZUGEFÜGT KONFETTI BLERPS
+// ========================================
+
+function showJournalNotification() {
+  const notification = document.createElement("div");
+  notification.className = "journalNotification";
+
+  notification.innerHTML = `
+    <span class="confetti">🎉</span>
+    <span>HINZUGEFÜGT!</span>
+    <span class="confetti">🎊</span>
+  `;
+
+  document.body.appendChild(notification);
+
+  // nach kurzer zeit wieder weg mit dem ding
+  setTimeout(function () {
+    notification.remove();
+  }, 2000);
 }
 
 // ========================================
@@ -83,6 +193,47 @@ function createMovieCard(data) {
 //
 // ABER NICHT JETZT.
 // erstmal sollen die normalen movieblerps funktionieren xD
+
+// ========================================
+// SEARCH FOR MOVIEBLERPS
+// ========================================
+
+movieSearch.addEventListener("submit", function (event) {
+  // formular würde sonst die komplette seite neu laden
+  // NEIN DANKE
+  event.preventDefault();
+
+  // was hat kat da eigentlich reingeschrieben?
+  const searchTerm = searchInput.value.trim();
+
+  // wenn nix drinsteht gibts auch nix zu suchen xD
+  if (!searchTerm) {
+    return;
+  }
+
+  // suchtext url-tauglich machen
+  const encodedSearchTerm = encodeURIComponent(searchTerm);
+
+  // tmdb nach dem gewünschten movieblerp fragen
+  fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${encodedSearchTerm}`,
+    options,
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+
+      // die alten popular movieblerps müssen erstmal raus
+      movieCards.innerHTML = "";
+
+      // und jetzt die suchergebnisse reinstopfen
+      data.results.forEach(function (movie) {
+        createMovieCard(movie);
+      });
+    });
+});
 
 // ========================================
 // MOANA SPICKZETTEL WEIL ICH SONST VERGESSE
