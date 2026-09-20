@@ -2,25 +2,19 @@
 
 Movie Diary ist ein kleines Frontend-Projekt im Rahmen meiner Weiterbildung im Bereich Software Engineering & AI an der WBS CODING SCHOOL.
 
-Die Anwendung nutzt die TMDB API, um Filmdaten abzurufen und dynamisch im Browser darzustellen. Nutzer:innen können nach Filmen suchen, Filme als Favoriten speichern und diese anschließend in einem persönlichen Journal verwalten.
+Die Anwendung nutzt die TMDB API, um Filmdaten abzurufen und dynamisch im Browser darzustellen. Nutzer:innen können nach Filmen suchen, Filme in einem persönlichen Journal speichern und dort eigene Notizen verwalten.
 
 ## ✨ Features
 
-- Anzeige von Fililmen über die TMDB API
+- Anzeige von Filmen über die TMDB API
 - dynamisch mit JavaScript erzeugte Movie Cards
 - Filmsuche
 - Anzeige von Filmpostern und Filminformationen
-- Speichern von Favoriten
-- persönliches Movie Journal
+- Speichern von Filmen im persönlichen Movie Journal
+- Herz-Anzeige für bereits gespeicherte Filme
 - eigene Notizen zu gespeicherten Filmen
 - Löschen gespeicherter Filme
-- Speicherung der Daten im `localStorage`
-
-### Bonus
-
-Wenn nach Fertigstellung der Grundfunktionen noch Zeit bleibt:
-
-- erweiterbare Movie Cards mit zusätzlichen Filmdetails
+- Speicherung der Journal-Daten im `localStorage`
 
 ## 🛠️ Technologies
 
@@ -52,10 +46,12 @@ Dieses Projekt verwendet die TMDB API für Filmdaten und Filmposter.
 
 This product uses the TMDB API but is not endorsed or certified by TMDB.
 
-Weitere von TMDB verlangte Attribution, einschließlich des TMDB-Logos, wird auch in der Anwendung berücksichtigt.
+Das offizielle TMDB-Logo und die entsprechende Attribution sind auch direkt in der Anwendung eingebunden.
 
 ## 🚧 Status
 
-Das Projekt befindet sich aktuell in Entwicklung.
+Die grundlegenden Anforderungen des Movie-Diary-Projekts sind umgesetzt.
 
-Zunächst werden die grundlegenden Funktionen umgesetzt. Styling und zusätzliche Features folgen anschließend.
+Die Anwendung kann Filme über die TMDB API laden und suchen, Filme im persönlichen Journal speichern, eigene Notizen dauerhaft im `localStorage` sichern und gespeicherte Filme wieder entfernen.
+
+Weitere Funktionen und visuelle Erweiterungen können zukünftig ergänzt werden.
